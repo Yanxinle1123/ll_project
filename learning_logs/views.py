@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from .forms import TopicForm, EntryForm
-from .models import Topic
+from .models import Topic, Entry
 
 
 # 创建视图
@@ -58,3 +58,20 @@ def new_entry(request, topic_id):
     # 显示表单
     context = {'topic': topic, 'form': form}
     return render(request, 'learning_logs/new_entry.html', context)
+
+
+def edit_entry(request, entry_id):
+    """编辑既有条目"""
+    entry = Entry.objects.get(id=entry_id)
+    topic = entry.topic
+    if request.method != 'POST':
+        # 初次请求, 使用当前条目填充表单
+        form = EntryForm(instance=entry)
+    else:
+        # POST提交的数据, 处理数据
+        form = EntryForm(instance=entry, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('learning_logs:topic', topic_id=topic.id)
+    context = {'entry': entry, 'topic': topic, 'form': form}
+    return render(request, 'learning_logs/edit_entry.html', context)
