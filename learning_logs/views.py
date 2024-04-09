@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 
-from .forms import TopicForm
+from .forms import TopicForm, EntryForm
 from .models import Topic
 
 
@@ -39,3 +39,22 @@ def new_topic(request):
     # 显示表单
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
+
+
+def new_entry(request, topic_id):
+    """添加新的条目"""
+    topic = Topic.objects.get(id=topic_id)
+    if request.method != 'POST':
+        # 未提交数据: 创建一个空表单
+        form = EntryForm()
+    else:
+        # 提交数据: 处理表单数据
+        form = EntryForm(data=request.POST)
+        if form.is_valid():
+            new_entry = form.save(commit=False)
+            new_entry.topic = topic
+            new_entry.save()
+            return redirect('learning_logs:topic', topic_id=topic_id)
+    # 显示表单
+    context = {'topic': topic, 'form': form}
+    return render(request, 'learning_logs/new_entry.html', context)
