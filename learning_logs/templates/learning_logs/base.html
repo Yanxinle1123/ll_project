@@ -1,6 +1,20 @@
 <p>
-    <a href="{% url 'learning_logs:index' %}">学习日志</a>
+    {% if user.is_authenticated %}
+        你好, {{ user.username }}<br>你今天学习了什么知识？快写下来吧<br>
+    {% else %}
+        <a href="{% url 'accounts:login' %}">登录</a>
+    {% endif %}
+    <a href="{% url 'learning_logs:index' %}">学习日志</a> -
     <a href="{% url 'learning_logs:topics' %}">查看日志</a>
+
 </p>
 
 {% block content %}{% endblock content %}
+
+{% if user.is_authenticated %}
+    <hr/>
+    <form action="{% url 'accounts:logout' %}" method="post">
+        {% csrf_token %}
+        <button name="submit">登出</button>
+    </form>
+{% endif %}
