@@ -42,7 +42,9 @@ def new_topic(request):
         # 提交数据: 处理表单数据
         form = TopicForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_topic = form.save(commit=False)
+            new_topic.owner = request.user
+            new_topic.save()
             return redirect('learning_logs:topic')
     # 显示表单
     context = {'form': form}
