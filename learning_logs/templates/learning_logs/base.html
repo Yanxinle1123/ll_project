@@ -2,6 +2,7 @@
     {% if user.is_authenticated %}
         你好, {{ user.username }}<br>你今天学习了什么知识？快写下来吧<br>
     {% else %}
+        <a href="{% url 'accounts:register' %}">注册</a> -
         <a href="{% url 'accounts:login' %}">登录</a>
     {% endif %}
     <a href="{% url 'learning_logs:index' %}">学习日志</a> -
