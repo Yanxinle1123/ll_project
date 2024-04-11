@@ -25,7 +25,7 @@
             <ul class="navbar-nav ms-auto mb-2 mb-md-0">
                 {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <span class="navbar-text me-2">你好, {{ user.username }}
+                        <span class="navbar-text me-2">你好,&nbsp;&nbsp;&nbsp;{{ user.username }}
                             </span></li>
                 {% else %}
                     <li class="nav-item">
@@ -34,6 +34,12 @@
                         <a class="nav-link" href="{% url 'accounts:login' %}">登录</a></li>
                 {% endif %}
             </ul> <!-- 与用户相关的链接到此结束 -->
+            {% if user.is_authenticated %}
+                <form action="{% url 'accounts:logout' %}" method="post">
+                    {% csrf_token %}
+                    <button name="submit" class="btn btn-outline-secondary btn-sm">注销</button>
+                </form>
+            {% endif %}
         </div> <!-- 定义导航栏可折叠部分的代码到此结束 -->
     </div> <!-- 定义导航栏容器的的代码到此结束 -->
 </nav> <!-- 定义导航栏的代码到此结束 -->
