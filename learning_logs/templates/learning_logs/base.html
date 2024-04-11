@@ -43,6 +43,13 @@
         </div> <!-- 定义导航栏可折叠部分的代码到此结束 -->
     </div> <!-- 定义导航栏容器的的代码到此结束 -->
 </nav> <!-- 定义导航栏的代码到此结束 -->
-{% block content %}{% endblock content %}
+<main class="container">
+    <div class="pb-2 mb-2 border-bottom">
+        {% block page_header %}{% endblock page_header %}
+    </div>
+    <div>
+        {% block content %}{% endblock content %}
+    </div>
+</main>
 </body>
 </html>
