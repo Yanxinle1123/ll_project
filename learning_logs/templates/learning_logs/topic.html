@@ -12,15 +12,19 @@
     </p>
     <ul>
         {% for entry in entries %}
-            <li>
-                <p>{{ entry.date_added|date:'M d, Y H:i' }}</p>
-                <p>{{ entry.text|linebreaks }}</p>
-                <p>
-                    <a href="{% url 'learning_logs:edit_entry' entry.id %}">编辑</a>
-                </p>
-            </li>
+            <div class="card mb-3">
+                <!-- 包含时间戳和编辑链接的标题 -->
+                <h4 class="card-header">
+                    {{ entry.date_added|date:'M d, Y H:i' }}
+                    <small>
+                        <a href="{% url 'learning_logs:edit_entry' entry.id %}">编辑条目</a>
+                    </small>
+                </h4>
+                <!-- 包含条目文本的正文 -->
+                <div class="card-body">{{ entry.text|linebreaks }}</div>
+            </div>
         {% empty %}
-            <li>该主题还没有条目</li>
+            <p>这里还没有关于该主题的条目</p>
         {% endfor %}
     </ul>
 {% endblock content %}
