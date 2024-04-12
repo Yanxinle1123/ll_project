@@ -1,5 +1,9 @@
 {% extends 'learning_logs/base.html' %}
 
+{% block page_header %}
+    <h1>{{ topic.text }}</h1>
+{% endblock page_header %}
+
 {% block content %}
     <p>主题: {{ topic.text }}</p>
     <p>条目:</p>
